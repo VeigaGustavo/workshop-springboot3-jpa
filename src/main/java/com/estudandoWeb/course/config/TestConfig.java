@@ -1,11 +1,14 @@
 package com.estudandoWeb.course.config;
 
 
+import com.estudandoWeb.course.entities.Category;
 import com.estudandoWeb.course.entities.Order;
 import com.estudandoWeb.course.entities.User;
 import com.estudandoWeb.course.entities.enums.OrderStatus;
 import com.estudandoWeb.course.repositories.OrderRepository;
 import com.estudandoWeb.course.repositories.UserRepository;
+import com.estudandoWeb.course.repositories.CategoryRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,9 +27,18 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 
         User user1 = new User(null, "Cristovão", "cristovao@gmail.com", "9999999", "123456");
         User user2 = new User(null, "Gustavo", "gustavo@gmail.com", "8888888", "123456");
@@ -37,6 +49,7 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
 
     }
 }
