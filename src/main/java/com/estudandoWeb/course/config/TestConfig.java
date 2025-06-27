@@ -1,15 +1,9 @@
 package com.estudandoWeb.course.config;
 
 
-import com.estudandoWeb.course.entities.Category;
-import com.estudandoWeb.course.entities.Order;
-import com.estudandoWeb.course.entities.Product;
-import com.estudandoWeb.course.entities.User;
+import com.estudandoWeb.course.entities.*;
 import com.estudandoWeb.course.entities.enums.OrderStatus;
-import com.estudandoWeb.course.repositories.OrderRepository;
-import com.estudandoWeb.course.repositories.ProductRepository;
-import com.estudandoWeb.course.repositories.UserRepository;
-import com.estudandoWeb.course.repositories.CategoryRepository;
+import com.estudandoWeb.course.repositories.*;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +28,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
 
     @Override
@@ -69,8 +66,13 @@ public class TestConfig implements CommandLineRunner {
         Order order3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, user1);
 
         userRepository.saveAll(Arrays.asList(user1, user2));
-        orderRepository.saveAll(Arrays.asList(order2, order2, order3));
+        orderRepository.saveAll(Arrays.asList(order1, order2, order3));
 
+        OrderItem orderItem1 = new OrderItem(order1, product1, 2, product1.getPrice());
+        OrderItem orderItem2 = new OrderItem(order1, product3, 1, product3.getPrice());
+        OrderItem orderItem3 = new OrderItem(order2, product3, 2, product3.getPrice());
+        OrderItem orderItem4 = new OrderItem(order3, product5, 2, product5.getPrice());
 
+        orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
     }
 }
