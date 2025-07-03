@@ -40,6 +40,7 @@ public class TestConfig implements CommandLineRunner {
         Category category2 = new Category(null, "Books");
         Category category3 = new Category(null, "Computers");
 
+
         Product product1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
         Product product2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
         Product product3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
@@ -49,6 +50,7 @@ public class TestConfig implements CommandLineRunner {
         categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
         productRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5));
 
+
         product1.getCategories().add(category2);
         product2.getCategories().add(category1);
         product2.getCategories().add(category3);
@@ -57,6 +59,7 @@ public class TestConfig implements CommandLineRunner {
         product5.getCategories().add(category2);
 
         productRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5));
+
 
         User user1 = new User(null, "Cristovão", "cristovao@gmail.com", "9999999", "123456");
         User user2 = new User(null, "Gustavo", "gustavo@gmail.com", "8888888", "123456");
@@ -68,11 +71,17 @@ public class TestConfig implements CommandLineRunner {
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2, order3));
 
+
         OrderItem orderItem1 = new OrderItem(order1, product1, 2, product1.getPrice());
         OrderItem orderItem2 = new OrderItem(order1, product3, 1, product3.getPrice());
         OrderItem orderItem3 = new OrderItem(order2, product3, 2, product3.getPrice());
         OrderItem orderItem4 = new OrderItem(order3, product5, 2, product5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
+
+        Payment payment1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), order1);
+        order1.setPayment(payment1);
+
+        orderRepository.save(order1);
     }
 }
